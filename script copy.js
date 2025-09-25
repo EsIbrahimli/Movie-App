@@ -1,29 +1,42 @@
 
 
+
+const apiKey = 'cdfe7ac';
 const loading = document.querySelector('.loading');
 const movieContainer = document.querySelector('.movie-container');
 
 function getDataMovie(title) {
-    const apiKey = 'cdfe7ac';
     const url = `https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`;
-    let myPromise = fetch(url, {
-        method: 'GET',
-        mode: 'cors'
-    });
     loading.style.display = 'block';
-    myPromise.then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log(data);
-        renderData(data);
-    }).catch(err => {
-        console.log('It is a error message!');
-    }).finally(() => {
-        loading.style.display = 'none';
+    fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
     })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log(data);
+        if (data.Response === 'False') {
+            throw new Error(data.Error || 'Film bulunamadı');
+        }
+        renderData(data);
+    })
+    .catch(err => {
+        console.error('API Error:', err);
+        showError(err.message);
+    })
+    .finally(() => {
+        loading.style.display = 'none';
+    });
 }
-
-
 function renderData(data) {
     const moviePoster = document.querySelector('.movie-poster');
     const movieTitle = document.querySelector('.movie-title');
@@ -34,14 +47,23 @@ function renderData(data) {
     moviePoster.src = data.Poster;
     movieTitle.innerHTML = data.Title;
     movieYear.innerHTML = `Year of Movie: ${data.Year}`;
-    movieRating.innerHTML = `Rating: ${data.Rating}`;
+    movieRating.innerHTML = `Rating: ${data.imdbRating}`; // Rating → imdbRating
     movieGenre.innerHTML = `Genre: ${data.Genre}`;
     movieDesc.innerHTML = data.Plot;
+}
+function showError(message) {
+    const container = document.querySelector('.movie-container');
+    container.innerHTML = `<div class="error">Hata: ${message}</div>`;
+    container.style.display = 'block';
 }
 const btn = document.querySelector('.btn');
 const input = document.querySelector('.input');
 btn.addEventListener('click', () => {
     const title = input.value.trim();
-    getDataMovie(title);
-    movieContainer.style.display = 'block';
+    if (title) {
+        getDataMovie(title);
+        movieContainer.style.display = 'block';
+    } else {
+        alert('Lütfen bir film adı girin!');
+    }
 });
