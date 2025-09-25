@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0;
+            box-sizing: border-box;
+            padding:20px;
+            background: linear-gradient(to right, gray,black);
+        }
+        .movie-container{
+           display:flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+           text-align: center;
+           width:380px;
+           margin:auto;
+           gap:10px;
+           background-color: lightgray;
+           padding:20px;
+           box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+           display: none;
+        }
+
+
+        .movie-title{
+            font-size:22px;
+            font-weight: bold;
+        }
+
+        .movie-genre{
+            font-size:16px;
+            font-weight: bold;
+        }
+
+        .movie-description{
+            text-align: center;
+        }
+
+        .input-container{
+            display: flex;
+            flex-direction: column;
+            gap:10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .movie-name{
+            font-size: 30px;
+            font-weight: bold;
+            margin-top:20px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .input{
+            outline:none;
+            border:1px solid lightgray;
+            padding:10px 20px;
+        }
+
+        .btn{
+            padding:10px 20px;
+            background-color: black;
+            color:white;
+            font-weight: bold;
+            font-size:22px;
+            margin-bottom:20px;
+        }
+        
+        .loading{
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            display:none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="input-container">
+        <div class="movie-name">Summary of Moive</div>
+         <input class="input" type="text" placeholder="Enter Movie Name...">
+         <button class="btn">About Movie</button>
+    </div>
+
+    <div class="loading">Loading...</div>
+
+    <div class="movie-container">
+        <img src="" class="movie-poster" alt="movie-poster">
+       <div class="movie-title">Title</div>
+       <div class="movie-genre"></div>
+        <div class="movie-year"></div>
+        <div class="movie-rating"></div>
+       <div class="movie-description"></div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
