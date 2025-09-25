@@ -9,7 +9,7 @@ function getDataMovie(title) {
 
     const url = `http://www.omdbapi.com/?apikey=${apiKey}&t=${title}`;
 
-    const myPromise = fetch(url);
+    let myPromise = fetch(url);
 
 
     loading.style.display = 'block';
